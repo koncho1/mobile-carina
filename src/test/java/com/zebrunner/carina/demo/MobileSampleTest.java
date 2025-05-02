@@ -16,9 +16,48 @@
 package com.zebrunner.carina.demo;
 
 import com.zebrunner.carina.core.IAbstractTest;
+import com.zebrunner.carina.demo.mobile.gui.pages.android.LoginPage;
+import com.zebrunner.carina.demo.mobile.gui.pages.common.HomePageBase;
+import com.zebrunner.carina.demo.mobile.gui.pages.common.LoginPageBase;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 public class MobileSampleTest implements IAbstractTest, IMobileUtils {
+
+    @Test
+    public void TestInvalidCredentialsLogin(){
+        LoginPageBase loginPage = new LoginPage(getDriver());
+        Assert.assertTrue(loginPage.isPageOpened());
+        loginPage.logIn("aaa","bbb");
+        Assert.assertTrue(loginPage.isInvalidCredentialsErrorMessagePresent());
+    }
+
+    @Test
+    public void TestLockedOutUserLogin(){
+        LoginPageBase loginPage = new LoginPage(getDriver());
+        Assert.assertTrue(loginPage.isPageOpened());
+        loginPage.logIn("locked_out_user","secret_sauce");
+        Assert.assertTrue(loginPage.isLockedOutUserErrorMessagePresent());
+    }
+
+    @Test
+    public void TestSuccessfulLogin(){
+        LoginPageBase loginPage = new LoginPage(getDriver());
+        Assert.assertTrue(loginPage.isPageOpened());
+        HomePageBase homePage=loginPage.standardUserLogin();
+        Assert.assertTrue(homePage.isPageOpened());
+    }
+
+    @Test
+    public void test(){
+        LoginPageBase loginPage = new LoginPage(getDriver());
+        Assert.assertTrue(loginPage.isPageOpened());
+        HomePageBase homePage=loginPage.standardUserLogin();
+        Assert.assertTrue(homePage.isPageOpened());
+        homePage.click();
+    }
+
 
 
 }
