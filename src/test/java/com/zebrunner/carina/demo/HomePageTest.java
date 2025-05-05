@@ -18,44 +18,53 @@ package com.zebrunner.carina.demo;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.demo.mobile.gui.pages.android.LoginPage;
 import com.zebrunner.carina.demo.mobile.gui.pages.common.HomePageBase;
+import com.zebrunner.carina.demo.mobile.gui.pages.common.ItemPageBase;
 import com.zebrunner.carina.demo.mobile.gui.pages.common.LoginPageBase;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class MobileSampleTest implements IAbstractTest, IMobileUtils {
+public class HomePageTest implements IAbstractTest{
 
     @Test
-    public void TestInvalidCredentialsLogin(){
-        LoginPageBase loginPage = new LoginPage(getDriver());
-        Assert.assertTrue(loginPage.isPageOpened());
-        loginPage.logIn("aaa","bbb");
-        Assert.assertTrue(loginPage.isInvalidCredentialsErrorMessagePresent());
-    }
-
-    @Test
-    public void TestLockedOutUserLogin(){
-        LoginPageBase loginPage = new LoginPage(getDriver());
-        Assert.assertTrue(loginPage.isPageOpened());
-        loginPage.logIn("locked_out_user","secret_sauce");
-        Assert.assertTrue(loginPage.isLockedOutUserErrorMessagePresent());
-    }
-
-    @Test
-    public void TestSuccessfulLogin(){
+    public void OpenItemPageTest(){
         LoginPageBase loginPage = new LoginPage(getDriver());
         Assert.assertTrue(loginPage.isPageOpened());
         HomePageBase homePage=loginPage.standardUserLogin();
         Assert.assertTrue(homePage.isPageOpened());
+        ItemPageBase itemPage = homePage.getItemPage();
+        Assert.assertTrue(itemPage.isPageOpened());
     }
 
-    @Test
-    public void test(){
+    @Test(dataProvider = "numberOfItemsProvider")
+    public void AddItemsToCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart){
         LoginPageBase loginPage = new LoginPage(getDriver());
         Assert.assertTrue(loginPage.isPageOpened());
         HomePageBase homePage=loginPage.standardUserLogin();
         Assert.assertTrue(homePage.isPageOpened());
-        homePage.click();
+        homePage.addItemsToCart(enteredNumberOfItemsInCart);
+        Assert.assertTrue(homePage.isNumberOfItemsInCartCorrect(expectedNumberOfItemsInCart));
+    }
+
+    @Test(dataProvider = "numberOfItemsProvider")
+    public void RemoveItemsFromCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart){
+        LoginPageBase loginPage = new LoginPage(getDriver());
+        Assert.assertTrue(loginPage.isPageOpened());
+        HomePageBase homePage=loginPage.standardUserLogin();
+        Assert.assertTrue(homePage.isPageOpened());
+        homePage.addItemsToCart(enteredNumberOfItemsInCart);
+        Assert.assertTrue(homePage.isNumberOfItemsInCartCorrect(expectedNumberOfItemsInCart));
+        homePage.removeItemsFromCart(enteredNumberOfItemsInCart);
+        Assert.assertTrue(homePage.isCartEmpty());
+
+    }
+
+    @DataProvider(name = "numberOfItemsProvider")
+    public Object[][] numberOfItemsDataProvider(){
+        return new Object[][]{
+                {3,3},
+                {2,2}
+        };
     }
 
 
