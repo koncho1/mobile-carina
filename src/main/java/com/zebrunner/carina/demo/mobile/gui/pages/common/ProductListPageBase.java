@@ -1,19 +1,13 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.common;
 
-import com.zebrunner.carina.demo.mobile.gui.pages.android.ItemPage;
-import com.zebrunner.carina.demo.mobile.gui.pages.android.LoginPage;
+import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductsDetailPage;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
-public abstract class HomePageBase extends AbstractPage {
+public abstract class ProductListPageBase extends AbstractPage {
 
-    @Override
-    public void open() {
-        super.open();
-    }
-
-    public abstract ItemPage getItemPage();
+    public abstract ProductsDetailPage openProductsDetailPage();
 
     public abstract void addItemsToCart(int numberOfItems);
 
@@ -23,7 +17,7 @@ public abstract class HomePageBase extends AbstractPage {
 
     public abstract void removeItemsFromCart(int enteredNumber);
 
-    public HomePageBase(WebDriver driver) {
+    public ProductListPageBase(WebDriver driver) {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
     }

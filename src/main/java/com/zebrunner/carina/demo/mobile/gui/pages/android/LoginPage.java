@@ -1,72 +1,73 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.android;
 
 import com.zebrunner.carina.demo.mobile.gui.pages.common.LoginPageBase;
+import com.zebrunner.carina.demo.mobile.gui.pages.common.ProductListPageBase;
+import com.zebrunner.carina.demo.mobile.gui.pages.enums.ErrorTypeMessage;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static com.zebrunner.carina.demo.mobile.gui.pages.enums.ErrorTypeMessage.INVALID;
+import static com.zebrunner.carina.demo.mobile.gui.pages.enums.ErrorTypeMessage.LOCKED_OUT;
+
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginPageBase.class)
 public class LoginPage extends LoginPageBase {
 
-    Wait<WebDriver> wait;
 
-    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-Username']")
+    private static final int ELEMENT_TIMEOUT=3;
+
+    private static final String TEST =String.format("//android.widget.TextView[@text='%s']", INVALID.message);
+
+    @AndroidFindBy(accessibility = "test-Username")
     private ExtendedWebElement loginInput;
 
-    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-Password']")
+    @AndroidFindBy(accessibility = "test-Password")
     private ExtendedWebElement passwordInput;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-LOGIN']")
+    @AndroidFindBy(accessibility = "test-LOGIN")
     private ExtendedWebElement logInButton;
 
-    @FindBy(xpath = "//android.widget.TextView[@text='Username and password do not match any user in this service.']")
+    @FindBy(xpath = "//android.widget.TextView[@text='%s']")
     private ExtendedWebElement invalidCredentialsError;
 
-    @FindBy(xpath = "//android.widget.TextView[@text='Sorry, this user has been locked out.']")
+    @FindBy(xpath = "//android.widget.TextView[@text='%s']")
     private ExtendedWebElement lockedOutUserError;
 
-    private void EnterLogin(String login){
+    private void enterLogin(String login){
         loginInput.type(login);
     }
 
-    private void EnterPassword(String password){
+    private void enterPassword(String password){
         passwordInput.type(password);
     }
 
-    public void logIn(String login, String password){
-        EnterLogin(login);
-        EnterPassword(password);
+    public ProductListPageBase logIn(String login, String password){
+        enterLogin(login);
+        enterPassword(password);
         logInButton.click();
+        return new ProductListPage(driver);
     }
 
-    public HomePage standardUserLogin(){
-        EnterLogin("standard_user");
-        EnterPassword("secret_sauce");
-        logInButton.click();
-        return new HomePage(driver);
-    }
 
     public boolean isInvalidCredentialsErrorMessagePresent(){
-        wait.until(ExpectedConditions.visibilityOf(invalidCredentialsError));
-        return invalidCredentialsError.isPresent();
+        return invalidCredentialsError.format(INVALID.message).isElementPresent(ELEMENT_TIMEOUT);
     }
 
     public boolean isLockedOutUserErrorMessagePresent(){
-        wait.until(ExpectedConditions.visibilityOf(lockedOutUserError));
-        return lockedOutUserError.isPresent();
+        return lockedOutUserError.format(LOCKED_OUT.message).isElementPresent(ELEMENT_TIMEOUT);
     }
 
 
     public LoginPage(WebDriver driver) {
         super(driver);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
         setUiLoadedMarker(loginInput);
     }
 }

@@ -4,16 +4,9 @@ import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
-import javax.swing.text.AbstractDocument;
+public class ProductsDetailPageBase extends AbstractPage {
 
-public class ItemPageBase extends AbstractPage {
-    @Override
-    public void open() {
-        super.open();
-    }
-
-
-    public ItemPageBase(WebDriver driver) {
+    public ProductsDetailPageBase(WebDriver driver) {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
     }

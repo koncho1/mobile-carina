@@ -1,6 +1,6 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.components;
 
-import com.zebrunner.carina.demo.mobile.gui.pages.android.ItemPage;
+import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductsDetailPage;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
@@ -9,12 +9,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 
-import org.openqa.selenium.support.ui.Wait;
 
-
-public class ShopItem extends AbstractUIObject {
-
-    Wait<WebDriver> wait;
+public class ProductListItemComponent extends AbstractUIObject {
 
     @AndroidFindBy (xpath = ".//android.widget.ImageView")
     private ExtendedWebElement itemPicture;
@@ -36,7 +32,7 @@ public class ShopItem extends AbstractUIObject {
     }
 
     public boolean isItemAddedToCart(){
-        return isElementNotPresent(removeButton,1);
+        return !isElementNotPresent(removeButton,1);
     }
 
     public String getPrice(){
@@ -47,9 +43,9 @@ public class ShopItem extends AbstractUIObject {
         return this.addToCartButton;
     }
 
-    public ItemPage openItemPage(){
+    public ProductsDetailPage openItemPage(){
         itemPicture.click();
-        return new ItemPage(driver);
+        return new ProductsDetailPage(driver);
     }
 
     public void addItemToCart(){
@@ -66,7 +62,7 @@ public class ShopItem extends AbstractUIObject {
 
 
 
-    public ShopItem(WebDriver driver, SearchContext searchContext) {
+    public ProductListItemComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
 }
