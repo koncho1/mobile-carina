@@ -1,5 +1,7 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.common;
 
+import com.zebrunner.carina.demo.mobile.gui.pages.android.CartPage;
+import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductListPage;
 import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductsDetailPage;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
@@ -16,6 +18,12 @@ public abstract class ProductListPageBase extends AbstractPage {
     public abstract boolean isCartEmpty();
 
     public abstract void removeItemsFromCart(int enteredNumber);
+
+    public abstract CartPage goToCart();
+
+    public abstract ProductListPage sortLowToHigh();
+
+    public abstract boolean arePricesLowToHigh();
 
     public ProductListPageBase(WebDriver driver) {
         super(driver);

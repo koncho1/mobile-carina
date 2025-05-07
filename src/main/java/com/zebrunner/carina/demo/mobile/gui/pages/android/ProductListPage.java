@@ -9,6 +9,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductListPageBase.class)
@@ -25,6 +27,15 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
     @AndroidFindBy(uiAutomator = "new UiSelector().description(\"test-Cart\").childSelector(new UiSelector().classNameMatches(\".*Text.*\"))")
     private ExtendedWebElement cartItemCount;
 
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']")
+    private ExtendedWebElement goToCartButton;
+
+    @FindBy(xpath = "//android.widget.TextView[@text='Price (low to high)']")
+    private ExtendedWebElement sortLowToHighButton;
+
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']")
+    private ExtendedWebElement sortingButton;
+
     public ProductsDetailPage openProductsDetailPage(){
        return productListItemComponentList.get(0).openItemPage();
     }
@@ -36,6 +47,35 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
     public boolean isNumberOfItemsInCartCorrect(Integer enteredNumber){
         return enteredNumber.equals(Integer.parseInt(cartItemCount.getText()));
     }
+
+    private ArrayList<Float> getPrices() {
+        ArrayList<Float> priceArray = new ArrayList<Float>();
+        for (ProductListItemComponent item : productListItemComponentList) {
+            Float price = Float.parseFloat(item.getPrice().substring(1));
+            priceArray.add(price);
+        }
+        return priceArray;
+    }
+
+    public boolean arePricesLowToHigh() {
+        ArrayList<Float> arrayListOfPrices = getPrices();
+        ArrayList<Float> copy = new ArrayList<Float>(arrayListOfPrices);
+        Collections.sort(copy);
+        return copy.equals(arrayListOfPrices);
+    }
+
+    public CartPage goToCart() {
+        goToCartButton.click();
+        return new CartPage(driver);
+    }
+
+    public ProductListPage sortLowToHigh() {
+        sortingButton.click();
+        sortLowToHighButton.click();
+        return new ProductListPage(driver);
+    }
+
+
 
     public void addItemsToCart(int numberOfItems){
         for(int i=0; i<numberOfItems; i++){

@@ -18,9 +18,7 @@ package com.zebrunner.carina.demo;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.demo.mobile.gui.pages.android.LoginPage;
 import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductListPage;
-import com.zebrunner.carina.demo.mobile.gui.pages.common.ProductListPageBase;
-import com.zebrunner.carina.demo.mobile.gui.pages.common.ProductsDetailPageBase;
-import com.zebrunner.carina.demo.mobile.gui.pages.common.LoginPageBase;
+import com.zebrunner.carina.demo.mobile.gui.pages.common.*;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -30,6 +28,8 @@ public class ProductListPageTest extends BaseTest{
     private static final int THREE_ITEMS_ENTERED=3;
 
     private static final int THREE_ITEMS_EXPECTED=3;
+
+    private static final int ONE_ITEM=1;
 
     @Test
     public void openItemPageTest(){
@@ -53,6 +53,35 @@ public class ProductListPageTest extends BaseTest{
         productListPage.removeItemsFromCart(enteredNumberOfItemsInCart);
         Assert.assertTrue(productListPage.isCartEmpty(),"The cart is not empty");
 
+    }
+
+    @Test(dataProvider = "numberOfItemsProvider")
+    public void CheckItemsInCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
+        ProductListPageBase productListPage= logInAsStandardUser();
+        productListPage.addItemsToCart(enteredNumberOfItemsInCart);
+        CartPageBase cartPage = productListPage.goToCart();
+        Assert.assertTrue(cartPage.isPageOpened(),"Cart Page didn't open");
+        Assert.assertTrue(cartPage.isNumberOfItemsSameAsAdded(expectedNumberOfItemsInCart),"The number of items in cart is not the same as the number of added items");
+    }
+
+    @Test
+    public void LowToHighSortTest() {
+        ProductListPageBase productListPage= logInAsStandardUser();
+        productListPage = productListPage.sortLowToHigh();
+        Assert.assertTrue(productListPage.arePricesLowToHigh(),"Prices are not sorted low to high");
+    }
+
+    @Test
+    public void CheckoutFunctionalityTest() {
+        ProductListPageBase productListPage= logInAsStandardUser();
+        CartPageBase cartPage = productListPage.goToCart();
+        Assert.assertTrue(cartPage.isPageOpened(), "Cart Page didn't open");
+        CheckoutInformationPageBase checkoutInformationPage = cartPage.goToCheckout();
+        Assert.assertTrue(checkoutInformationPage.isPageOpened(),"Checkout information page didn't open");
+        CheckoutOverviewPageBase checkoutOverviewPage= checkoutInformationPage.fillOutInformationForm("adssad","bbbb","dsad");
+        Assert.assertTrue(checkoutOverviewPage.isPageOpened(),"Checkout overview page didn't open");
+        CheckoutCompletePageBase checkoutCompletePage= checkoutOverviewPage.finalizeCheckout();
+        Assert.assertTrue(checkoutCompletePage.isPageOpened(),"Checkout complete page didn't open");
     }
 
     @DataProvider(name = "numberOfItemsProvider")

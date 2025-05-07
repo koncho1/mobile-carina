@@ -2,6 +2,7 @@ package com.zebrunner.carina.demo.mobile.gui.pages.components;
 
 import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductsDetailPage;
 
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -10,7 +11,7 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 
 
-public class ProductListItemComponent extends AbstractUIObject {
+public class ProductListItemComponent extends AbstractUIObject implements IMobileUtils {
 
     @AndroidFindBy (xpath = ".//android.widget.ImageView")
     private ExtendedWebElement itemPicture;
@@ -36,6 +37,7 @@ public class ProductListItemComponent extends AbstractUIObject {
     }
 
     public String getPrice(){
+        swipe(itemPriceText);
         return itemPriceText.getText();
     }
 
