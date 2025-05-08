@@ -1,6 +1,7 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.common;
 
 import com.zebrunner.carina.demo.mobile.gui.pages.android.CartPage;
+import com.zebrunner.carina.demo.mobile.gui.pages.android.MenuPage;
 import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductListPage;
 import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductsDetailPage;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
@@ -20,6 +21,8 @@ public abstract class ProductListPageBase extends AbstractPage {
     public abstract void removeItemsFromCart(int enteredNumber);
 
     public abstract CartPage goToCart();
+
+    public abstract MenuPage openSideMenu();
 
     public abstract ProductListPage sortLowToHigh();
 

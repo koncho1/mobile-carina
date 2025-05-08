@@ -18,7 +18,10 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
 
     private static final int TIMEOUT_TIME=1;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Item']")
+    @AndroidFindBy(accessibility = "test-Menu")
+    private ExtendedWebElement sideMenuButton;
+
+    @AndroidFindBy(accessibility = "test-Item")
     private List<ProductListItemComponent> productListItemComponentList;
 
     @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Menu']/following-sibling::android.widget.ImageView")
@@ -27,13 +30,13 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
     @AndroidFindBy(uiAutomator = "new UiSelector().description(\"test-Cart\").childSelector(new UiSelector().classNameMatches(\".*Text.*\"))")
     private ExtendedWebElement cartItemCount;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']")
+    @AndroidFindBy(accessibility = "test-Cart")
     private ExtendedWebElement goToCartButton;
 
     @FindBy(xpath = "//android.widget.TextView[@text='Price (low to high)']")
     private ExtendedWebElement sortLowToHighButton;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']")
+    @AndroidFindBy(accessibility = "test-Modal Selector Button")
     private ExtendedWebElement sortingButton;
 
     public ProductsDetailPage openProductsDetailPage(){
@@ -55,6 +58,11 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
             priceArray.add(price);
         }
         return priceArray;
+    }
+
+    public MenuPage openSideMenu(){
+        sideMenuButton.click();
+        return new MenuPage(driver);
     }
 
     public boolean arePricesLowToHigh() {

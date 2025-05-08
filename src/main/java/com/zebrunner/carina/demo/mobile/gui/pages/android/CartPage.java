@@ -7,6 +7,7 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,14 +21,13 @@ public class CartPage extends CartPageBase {
     @FindBy(xpath = "//android.widget.TextView[@text='YOUR CART']")
     private ExtendedWebElement yourCartLabel;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Item']")
+    @AndroidFindBy(accessibility = "test-Item")
     private List<ProductListItemComponent> cartItemList;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CHECKOUT']")
+    @AndroidFindBy(accessibility = "test-CHECKOUT")
     private ExtendedWebElement checkoutButton;
 
     public boolean isNumberOfItemsSameAsAdded(int expectedNumberOfItems) {
-        System.out.println(cartItemList.size());
         return cartItemList.size() == expectedNumberOfItems;
     }
 

@@ -4,9 +4,13 @@ import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
-public abstract class ProductsDetailPageBase extends AbstractPage {
+public abstract class DrawPageBase extends AbstractPage {
 
-    public ProductsDetailPageBase(WebDriver driver) {
+    public abstract void draw();
+
+    public abstract boolean isDrawingPresent();
+
+    public DrawPageBase(WebDriver driver) {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
     }

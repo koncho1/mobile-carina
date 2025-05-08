@@ -23,74 +23,92 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class ProductListPageTest extends BaseTest{
+public class ProductListPageTest extends BaseTest {
 
-    private static final int THREE_ITEMS_ENTERED=3;
+    private static final int THREE_ITEMS_ENTERED = 3;
 
-    private static final int THREE_ITEMS_EXPECTED=3;
+    private static final int THREE_ITEMS_EXPECTED = 3;
 
-    private static final int ONE_ITEM=1;
+    private static final int ONE_ITEM = 1;
 
     @Test
-    public void openItemPageTest(){
-        ProductListPageBase productListPage= logInAsStandardUser();
+    public void openItemPageTest() {
+        ProductListPageBase productListPage = logInAsStandardUser();
         ProductsDetailPageBase itemPage = productListPage.openProductsDetailPage();
-        Assert.assertTrue(itemPage.isPageOpened(),"There was a problem opening the products detail page");
+        Assert.assertTrue(itemPage.isPageOpened(), "There was a problem opening the products detail page");
     }
 
     @Test(dataProvider = "numberOfItemsProvider")
-    public void addItemsToCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart){
-        ProductListPageBase productListPage= logInAsStandardUser();
+    public void addItemsToCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
+        ProductListPageBase productListPage = logInAsStandardUser();
         productListPage.addItemsToCart(enteredNumberOfItemsInCart);
-        Assert.assertTrue(productListPage.isNumberOfItemsInCartCorrect(expectedNumberOfItemsInCart),"The number of items in the cart does not match the expected number of items");
+        Assert.assertTrue(productListPage.isNumberOfItemsInCartCorrect(expectedNumberOfItemsInCart), "The number of items in the cart does not match the expected number of items");
     }
 
     @Test(dataProvider = "numberOfItemsProvider")
-    public void removeItemsFromCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart){
-        ProductListPageBase productListPage= logInAsStandardUser();
+    public void removeItemsFromCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
+        ProductListPageBase productListPage = logInAsStandardUser();
         productListPage.addItemsToCart(enteredNumberOfItemsInCart);
-        Assert.assertTrue(productListPage.isNumberOfItemsInCartCorrect(expectedNumberOfItemsInCart),"The number of items in the cart does not match the expected number of items");
+        Assert.assertTrue(productListPage.isNumberOfItemsInCartCorrect(expectedNumberOfItemsInCart), "The number of items in the cart does not match the expected number of items");
         productListPage.removeItemsFromCart(enteredNumberOfItemsInCart);
-        Assert.assertTrue(productListPage.isCartEmpty(),"The cart is not empty");
+        Assert.assertTrue(productListPage.isCartEmpty(), "The cart is not empty");
 
     }
 
     @Test(dataProvider = "numberOfItemsProvider")
-    public void CheckItemsInCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
-        ProductListPageBase productListPage= logInAsStandardUser();
+    public void checkItemsInCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
+        ProductListPageBase productListPage = logInAsStandardUser();
         productListPage.addItemsToCart(enteredNumberOfItemsInCart);
         CartPageBase cartPage = productListPage.goToCart();
-        Assert.assertTrue(cartPage.isPageOpened(),"Cart Page didn't open");
-        Assert.assertTrue(cartPage.isNumberOfItemsSameAsAdded(expectedNumberOfItemsInCart),"The number of items in cart is not the same as the number of added items");
+        Assert.assertTrue(cartPage.isPageOpened(), "Cart Page didn't open");
+        Assert.assertTrue(cartPage.isNumberOfItemsSameAsAdded(expectedNumberOfItemsInCart), "The number of items in cart is not the same as the number of added items");
     }
 
     @Test
-    public void LowToHighSortTest() {
-        ProductListPageBase productListPage= logInAsStandardUser();
+    public void lowToHighSortTest() {
+        ProductListPageBase productListPage = logInAsStandardUser();
         productListPage = productListPage.sortLowToHigh();
-        Assert.assertTrue(productListPage.arePricesLowToHigh(),"Prices are not sorted low to high");
+        Assert.assertTrue(productListPage.arePricesLowToHigh(), "Prices are not sorted low to high");
     }
 
     @Test
-    public void CheckoutFunctionalityTest() {
-        ProductListPageBase productListPage= logInAsStandardUser();
+    public void checkoutFunctionalityTest() {
+        ProductListPageBase productListPage = logInAsStandardUser();
         CartPageBase cartPage = productListPage.goToCart();
         Assert.assertTrue(cartPage.isPageOpened(), "Cart Page didn't open");
         CheckoutInformationPageBase checkoutInformationPage = cartPage.goToCheckout();
-        Assert.assertTrue(checkoutInformationPage.isPageOpened(),"Checkout information page didn't open");
-        CheckoutOverviewPageBase checkoutOverviewPage= checkoutInformationPage.fillOutInformationForm("adssad","bbbb","dsad");
-        Assert.assertTrue(checkoutOverviewPage.isPageOpened(),"Checkout overview page didn't open");
-        CheckoutCompletePageBase checkoutCompletePage= checkoutOverviewPage.finalizeCheckout();
-        Assert.assertTrue(checkoutCompletePage.isPageOpened(),"Checkout complete page didn't open");
+        Assert.assertTrue(checkoutInformationPage.isPageOpened(), "Checkout information page didn't open");
+        CheckoutOverviewPageBase checkoutOverviewPage = checkoutInformationPage.fillOutInformationForm("adssad", "bbbb", "dsad");
+        Assert.assertTrue(checkoutOverviewPage.isPageOpened(), "Checkout overview page didn't open");
+        CheckoutCompletePageBase checkoutCompletePage = checkoutOverviewPage.finalizeCheckout();
+        Assert.assertTrue(checkoutCompletePage.isPageOpened(), "Checkout complete page didn't open");
+    }
+
+    @Test
+    public void logoutFunctionalityTest() {
+        ProductListPageBase productListPage = logInAsStandardUser();
+        MenuPageBase menuPage = productListPage.openSideMenu();
+        Assert.assertTrue(menuPage.isPageOpened(), "Menu page didn't open");
+        LoginPageBase loginPage = menuPage.logOut();
+        Assert.assertTrue(loginPage.isPageOpened(), "Login page didn't open");
+    }
+
+    @Test
+    public void findByImageStrategyTest() {
+        ProductListPageBase productListPage = logInAsStandardUser();
+        MenuPageBase menuPage = productListPage.openSideMenu();
+        DrawPageBase drawPage = menuPage.openDrawFunctionality();
+        Assert.assertTrue(drawPage.isPageOpened(), "Drawing page didn't open");
+        drawPage.draw();
+        Assert.assertTrue(drawPage.isDrawingPresent(), "The drawing was not found");
     }
 
     @DataProvider(name = "numberOfItemsProvider")
-    public Object[][] numberOfItemsDataProvider(){
+    public Object[][] numberOfItemsDataProvider() {
         return new Object[][]{
-                {THREE_ITEMS_ENTERED,THREE_ITEMS_EXPECTED}
+                {THREE_ITEMS_ENTERED, THREE_ITEMS_EXPECTED}
         };
     }
-
 
 
 }
