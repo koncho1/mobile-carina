@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class CheckoutOverviewPageBase extends AbstractPage {
 
-    public abstract CheckoutCompletePage finalizeCheckout();
+    public abstract CheckoutCompletePage clickButtonContinue();
 
     public CheckoutOverviewPageBase(WebDriver driver) {
         super(driver);

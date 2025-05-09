@@ -2,16 +2,16 @@ package com.zebrunner.carina.demo.mobile.gui.pages.android;
 
 import com.zebrunner.carina.demo.mobile.gui.pages.common.CheckoutCompletePageBase;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 public class CheckoutCompletePage extends CheckoutCompletePageBase {
 
-    @FindBy(xpath = "//android.widget.ScrollView[@content-desc=\"test-CHECKOUT: COMPLETE!\"]/android.view.ViewGroup/android.widget.ImageView")
-    private ExtendedWebElement checkoutCompleteLogo;
+    @AndroidFindBy(accessibility = "test-CHECKOUT: COMPLETE!")
+    private ExtendedWebElement pageTitle;
 
     public CheckoutCompletePage(WebDriver driver) {
         super(driver);
-        setUiLoadedMarker(checkoutCompleteLogo);
+        setUiLoadedMarker(pageTitle);
     }
 }

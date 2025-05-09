@@ -1,14 +1,12 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.android;
 
 import com.zebrunner.carina.demo.mobile.gui.pages.common.DrawPageBase;
-import com.zebrunner.carina.demo.mobile.gui.pages.common.LoginPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = DrawPageBase.class)
 public class DrawPage extends DrawPageBase implements IMobileUtils {
@@ -20,11 +18,11 @@ public class DrawPage extends DrawPageBase implements IMobileUtils {
     private ExtendedWebElement img;
 
 
-    public boolean isDrawingPresent(){
+    public boolean isDrawingPresent() {
         return img.isElementPresent();
     }
 
-    public void draw(){
+    public void draw() {
         tap(311, 875);
         tap(788, 875);
         tap(270, 1324);

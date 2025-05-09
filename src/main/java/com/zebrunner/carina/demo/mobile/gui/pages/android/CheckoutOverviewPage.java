@@ -10,13 +10,13 @@ import org.openqa.selenium.support.FindBy;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CheckoutOverviewPageBase.class)
 public class CheckoutOverviewPage extends CheckoutOverviewPageBase {
 
-    @FindBy(xpath = "//android.widget.TextView[@text=\"CHECKOUT: OVERVIEW\"]")
+    @FindBy(xpath = "//android.widget.TextView[@text='CHECKOUT: OVERVIEW']")
     private ExtendedWebElement checkoutOverviewText;
 
     @AndroidFindBy(accessibility = "test-FINISH")
     private ExtendedWebElement finishButton;
 
-    public CheckoutCompletePage finalizeCheckout(){
+    public CheckoutCompletePage clickButtonContinue() {
         finishButton.click();
         return new CheckoutCompletePage(driver);
     }

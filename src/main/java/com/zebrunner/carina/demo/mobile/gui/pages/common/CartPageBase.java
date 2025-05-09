@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class CartPageBase extends AbstractPage {
 
-    public abstract boolean isNumberOfItemsSameAsAdded(int expectedNumberOfItems);
+    public abstract boolean isNumberOfItemsSameAsAdded(Integer expectedNumberOfItems);
 
     public abstract CheckoutInformationPage goToCheckout();
 

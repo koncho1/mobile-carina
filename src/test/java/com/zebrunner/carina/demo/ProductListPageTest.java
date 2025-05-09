@@ -15,9 +15,6 @@
  *******************************************************************************/
 package com.zebrunner.carina.demo;
 
-import com.zebrunner.carina.core.IAbstractTest;
-import com.zebrunner.carina.demo.mobile.gui.pages.android.LoginPage;
-import com.zebrunner.carina.demo.mobile.gui.pages.android.ProductListPage;
 import com.zebrunner.carina.demo.mobile.gui.pages.common.*;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -29,7 +26,11 @@ public class ProductListPageTest extends BaseTest {
 
     private static final int THREE_ITEMS_EXPECTED = 3;
 
-    private static final int ONE_ITEM = 1;
+    private static final String FIRST_NAME = "John";
+
+    private static final String LAST_NAME = "Doe";
+
+    private static final String ZIP_CODE = "A10";
 
     @Test
     public void openItemPageTest() {
@@ -39,7 +40,7 @@ public class ProductListPageTest extends BaseTest {
     }
 
     @Test(dataProvider = "numberOfItemsProvider")
-    public void addItemsToCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
+    public void addItemsToCartInCartIconNumberTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
         ProductListPageBase productListPage = logInAsStandardUser();
         productListPage.addItemsToCart(enteredNumberOfItemsInCart);
         Assert.assertTrue(productListPage.isNumberOfItemsInCartCorrect(expectedNumberOfItemsInCart), "The number of items in the cart does not match the expected number of items");
@@ -56,7 +57,7 @@ public class ProductListPageTest extends BaseTest {
     }
 
     @Test(dataProvider = "numberOfItemsProvider")
-    public void checkItemsInCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
+    public void addProductToCartTest(int enteredNumberOfItemsInCart, int expectedNumberOfItemsInCart) {
         ProductListPageBase productListPage = logInAsStandardUser();
         productListPage.addItemsToCart(enteredNumberOfItemsInCart);
         CartPageBase cartPage = productListPage.goToCart();
@@ -65,10 +66,10 @@ public class ProductListPageTest extends BaseTest {
     }
 
     @Test
-    public void lowToHighSortTest() {
+    public void itemPriceLowToHighSortTest() {
         ProductListPageBase productListPage = logInAsStandardUser();
-        productListPage = productListPage.sortLowToHigh();
-        Assert.assertTrue(productListPage.arePricesLowToHigh(), "Prices are not sorted low to high");
+        productListPage = productListPage.sortItemsByPriceLowToHigh();
+        Assert.assertTrue(productListPage.areItemPricesSortedLowToHigh(), "Prices are not sorted low to high");
     }
 
     @Test
@@ -78,9 +79,9 @@ public class ProductListPageTest extends BaseTest {
         Assert.assertTrue(cartPage.isPageOpened(), "Cart Page didn't open");
         CheckoutInformationPageBase checkoutInformationPage = cartPage.goToCheckout();
         Assert.assertTrue(checkoutInformationPage.isPageOpened(), "Checkout information page didn't open");
-        CheckoutOverviewPageBase checkoutOverviewPage = checkoutInformationPage.fillOutInformationForm("adssad", "bbbb", "dsad");
+        CheckoutOverviewPageBase checkoutOverviewPage = checkoutInformationPage.fillOutInformationForm(FIRST_NAME, LAST_NAME, ZIP_CODE);
         Assert.assertTrue(checkoutOverviewPage.isPageOpened(), "Checkout overview page didn't open");
-        CheckoutCompletePageBase checkoutCompletePage = checkoutOverviewPage.finalizeCheckout();
+        CheckoutCompletePageBase checkoutCompletePage = checkoutOverviewPage.clickButtonContinue();
         Assert.assertTrue(checkoutCompletePage.isPageOpened(), "Checkout complete page didn't open");
     }
 

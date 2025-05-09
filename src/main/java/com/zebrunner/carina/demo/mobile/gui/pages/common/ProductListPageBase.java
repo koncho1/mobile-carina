@@ -24,9 +24,9 @@ public abstract class ProductListPageBase extends AbstractPage {
 
     public abstract MenuPage openSideMenu();
 
-    public abstract ProductListPage sortLowToHigh();
+    public abstract ProductListPage sortItemsByPriceLowToHigh();
 
-    public abstract boolean arePricesLowToHigh();
+    public abstract boolean areItemPricesSortedLowToHigh();
 
     public ProductListPageBase(WebDriver driver) {
         super(driver);

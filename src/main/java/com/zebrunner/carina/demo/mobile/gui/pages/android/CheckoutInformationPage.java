@@ -1,10 +1,8 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.android;
 
 import com.zebrunner.carina.demo.mobile.gui.pages.common.CheckoutInformationPageBase;
-import com.zebrunner.carina.demo.mobile.gui.pages.common.ProductListPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -27,19 +25,19 @@ public class CheckoutInformationPage extends CheckoutInformationPageBase {
     @AndroidFindBy(accessibility = "test-CONTINUE")
     private ExtendedWebElement submitFormButton;
 
-    private void enterFirstName(String firstName){
+    private void enterFirstName(String firstName) {
         firstNameField.type(firstName);
     }
 
-    private void enterLastName(String lastName){
+    private void enterLastName(String lastName) {
         lastNameField.type(lastName);
     }
 
-    private void enterZipCode(String zipCode){
+    private void enterZipCode(String zipCode) {
         zipCodeField.type(zipCode);
     }
 
-    public CheckoutOverviewPage fillOutInformationForm(String firstName, String lastName, String zipCode){
+    public CheckoutOverviewPage fillOutInformationForm(String firstName, String lastName, String zipCode) {
         enterFirstName(firstName);
         enterLastName(lastName);
         enterZipCode(zipCode);
