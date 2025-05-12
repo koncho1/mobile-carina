@@ -30,7 +30,7 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
     @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Menu']/following-sibling::android.widget.ImageView")
     private ExtendedWebElement logoIcon;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.ViewGroup\").instance(8)")
+    @AndroidFindBy(uiAutomator = "//*[@content-desc='test-Menu']/..")
     private TopMainMenuComponent topMainMenuComponent;
 
     @AndroidFindBy(accessibility = "test-Modal Selector Button")
@@ -67,6 +67,7 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
     }
 
     public ProductListPage sortItemsByPriceLowToHigh() {
+        sortingButton.click();
         sortingButton.sortLowToHigh();
         return new ProductListPage(driver);
     }
@@ -75,9 +76,6 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
     public void addItemsToCart(int numberOfItems) {
         for (int i = 0; i < numberOfItems; i++) {
             ProductListItemComponent item = productListItemComponentList.get(i);
-            if (i > 0 && i % 2 == 0) {
-                swipe(item.getAddToCartButton());
-            }
             if (!item.isItemAddedToCart()) {
                 item.addItemToCart();
             }
@@ -87,9 +85,6 @@ public class ProductListPage extends ProductListPageBase implements IMobileUtils
     public void removeItemsFromCart(int numberOfItems) {
         for (int i = 0; i < numberOfItems; i++) {
             ProductListItemComponent item = productListItemComponentList.get(i);
-            if (i > 0 && i % 2 == 0) {
-                swipe(item.getRemoveButton());
-            }
             if (item.isItemAddedToCart()) {
                 item.removeItemFromCart();
             }

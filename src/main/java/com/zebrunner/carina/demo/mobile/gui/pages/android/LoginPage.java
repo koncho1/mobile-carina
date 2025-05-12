@@ -17,9 +17,7 @@ public class LoginPage extends LoginPageBase {
 
 
     private static final int ELEMENT_TIMEOUT = 3;
-
-    private static final String TEST = String.format("//android.widget.TextView[@text='%s']", INVALID.message);
-
+    
     @AndroidFindBy(accessibility = "test-Username")
     private ExtendedWebElement loginInput;
 

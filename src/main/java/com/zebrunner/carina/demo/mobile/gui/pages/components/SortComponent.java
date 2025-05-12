@@ -1,5 +1,6 @@
 package com.zebrunner.carina.demo.mobile.gui.pages.components;
 
+import com.zebrunner.carina.demo.mobile.gui.pages.enums.SortType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -10,17 +11,15 @@ import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
 
+import static com.zebrunner.carina.demo.mobile.gui.pages.enums.SortType.LOWHIGH;
+
 public class SortComponent extends AbstractUIObject {
 
-    @AndroidFindBy(xpath = "//android.widget.ScrollView[@content-desc='Selector container']//android.widget.TextView[@text='Price (low to high)']")
-    private ExtendedWebElement sortLowToHighButton;
-
-    @AndroidFindBy(accessibility = "test-Modal Selector Button")
-    private ExtendedWebElement sortingButton;
+    @AndroidFindBy(xpath = ".//android.view.ViewGroup//android.widget.TextView[contains(@text, '%s')]")
+    private ExtendedWebElement sortTypeButton;
 
     public void sortLowToHigh() {
-        sortingButton.click();
-        sortLowToHighButton.click();
+        sortTypeButton.format(LOWHIGH.type).click();
     }
 
     public SortComponent(WebDriver driver, SearchContext searchContext) {

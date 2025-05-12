@@ -17,6 +17,8 @@ import java.util.List;
 
 public class ProductListItemComponent extends AbstractUIObject implements IMobileUtils {
 
+    private static final int WAIT_TIMEOUT = 1;
+
     @AndroidFindBy(xpath = ".//android.widget.ImageView")
     private ExtendedWebElement itemPicture;
 
@@ -49,7 +51,7 @@ public class ProductListItemComponent extends AbstractUIObject implements IMobil
     }
 
     public boolean isItemAddedToCart() {
-        return !isElementNotPresent(removeButton, 1);
+        return !isElementNotPresent(removeButton, WAIT_TIMEOUT);
     }
 
     public String getPrice() {
@@ -57,9 +59,6 @@ public class ProductListItemComponent extends AbstractUIObject implements IMobil
         return itemPriceText.getText();
     }
 
-    public ExtendedWebElement getAddToCartButton() {
-        return this.addToCartButton;
-    }
 
     public static Integer getNumberOfItemsInCart() {
         return numberOfItemsInCart;
@@ -71,17 +70,15 @@ public class ProductListItemComponent extends AbstractUIObject implements IMobil
     }
 
     public void addItemToCart() {
+        swipe(addToCartButton);
         addToCartButton.click();
         numberOfItemsInCart += 1;
     }
 
     public void removeItemFromCart() {
+        swipe(removeButton);
         removeButton.click();
         numberOfItemsInCart -= 1;
-    }
-
-    public ExtendedWebElement getRemoveButton() {
-        return this.removeButton;
     }
 
 
