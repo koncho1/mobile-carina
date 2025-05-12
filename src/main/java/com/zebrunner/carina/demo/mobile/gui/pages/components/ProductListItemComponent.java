@@ -35,8 +35,6 @@ public class ProductListItemComponent extends AbstractUIObject implements IMobil
     private ExtendedWebElement removeButton;
 
 
-    private static Integer numberOfItemsInCart = 0;
-
     public static List<BigDecimal> getPrices(List<ProductListItemComponent> itemComponentList) {
         List<BigDecimal> priceArray = new ArrayList<>();
         for (ProductListItemComponent item : itemComponentList) {
@@ -60,10 +58,6 @@ public class ProductListItemComponent extends AbstractUIObject implements IMobil
     }
 
 
-    public static Integer getNumberOfItemsInCart() {
-        return numberOfItemsInCart;
-    }
-
     public ProductsDetailPage openItemPage() {
         itemPicture.click();
         return new ProductsDetailPage(driver);
@@ -72,13 +66,11 @@ public class ProductListItemComponent extends AbstractUIObject implements IMobil
     public void addItemToCart() {
         swipe(addToCartButton);
         addToCartButton.click();
-        numberOfItemsInCart += 1;
     }
 
     public void removeItemFromCart() {
         swipe(removeButton);
         removeButton.click();
-        numberOfItemsInCart -= 1;
     }
 
 

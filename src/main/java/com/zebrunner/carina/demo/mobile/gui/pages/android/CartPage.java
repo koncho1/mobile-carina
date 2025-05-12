@@ -2,6 +2,7 @@ package com.zebrunner.carina.demo.mobile.gui.pages.android;
 
 import com.zebrunner.carina.demo.mobile.gui.pages.common.CartPageBase;
 import com.zebrunner.carina.demo.mobile.gui.pages.components.ProductListItemComponent;
+import com.zebrunner.carina.demo.mobile.gui.pages.components.TopMainMenuComponent;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -22,8 +23,11 @@ public class CartPage extends CartPageBase {
     @AndroidFindBy(accessibility = "test-CHECKOUT")
     private ExtendedWebElement checkoutButton;
 
+    @AndroidFindBy(uiAutomator = "//*[@content-desc='test-Menu']/..")
+    private TopMainMenuComponent topMainMenuComponent;
+
     public boolean isNumberOfItemsSameAsAdded(Integer expectedNumberOfItems) {
-        return ProductListItemComponent.getNumberOfItemsInCart().equals(expectedNumberOfItems);
+        return Integer.valueOf(topMainMenuComponent.getCartItemCount()).equals(expectedNumberOfItems);
     }
 
     public CheckoutInformationPage goToCheckout() {
