@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
 
-import static com.zebrunner.carina.demo.mobile.gui.pages.enums.SortType.LOWHIGH;
+import static com.zebrunner.carina.demo.mobile.gui.pages.enums.SortType.PRICELOWHIGH;
 
 public class SortComponent extends AbstractUIObject {
 
@@ -19,7 +19,7 @@ public class SortComponent extends AbstractUIObject {
     private ExtendedWebElement sortTypeButton;
 
     public void sortLowToHigh() {
-        sortTypeButton.format(LOWHIGH.type).click();
+        sortTypeButton.format(PRICELOWHIGH.getSortType()).click();
     }
 
     public SortComponent(WebDriver driver, SearchContext searchContext) {
