@@ -25,7 +25,7 @@
 		<suite>helloWorld</suite>
 	</properties>
 
-	<!--repositories>
+	<repositories>
 		<repository>
 			<id>zebrunner_snapshots</id>
 			<name>zebrunner Snapshots</name>
@@ -37,7 +37,12 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories-->
+
+		<repository>
+			<id>google-maven</id>
+			<url>https://maven.top-q.co.il/content/repositories/public/</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
